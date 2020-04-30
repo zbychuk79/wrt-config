@@ -1,0 +1,1 @@
+Konfiguracja moich punktów dostępowych WiFi.

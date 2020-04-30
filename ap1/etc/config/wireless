@@ -1,0 +1,18 @@
+
+config wifi-device 'radio0'
+	option type 'mac80211'
+	option path 'platform/soc/20980000.usb/usb1/1-1/1-1.3/1-1.3:1.0'
+	option legacy_rates '1'
+	option hwmode '11g'
+	option htmode 'HT20'
+	option country 'PL'
+	option channel '1'
+
+config wifi-iface 'default_radio0'
+	option device 'radio0'
+	option network 'lan'
+	option mode 'ap'
+	option ssid 'ap'
+	option encryption 'psk2+ccmp'
+	option key 'haslo1'
+
