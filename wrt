@@ -54,18 +54,19 @@ if [ ! -d wrt-config ]; then
     git clone https://github.com/zbychuk79/wrt-config.git
 fi
 
-if [ ! -d $HOME/wrt-$wersja/openwrt-imagebuilder-$wersja-brcm2708-$rpi.Linux-x86_64 ]; then
+if [ ! -d $HOME/wrt-$wersja/openwrt-imagebuilder-$wersja-bcm27xx-$rpi.Linux-x86_64 ]; then
     echo "Pobieram ..."
     mkdir -p $HOME/wrt-$wersja
     cd $HOME/wrt-$wersja
-    wget -c $link/$wersja/targets/bcm27xx/$rpi/openwrt-imagebuilder-$wersja-brcm2708-$rpi.Linux-x86_64.tar.xz
-    tar xvfJ openwrt-imagebuilder-$wersja-brcm2708-$rpi.Linux-x86_64.tar.xz
+    echo "$link/$wersja/targets/bcm27xx/$rpi/openwrt-imagebuilder-$wersja-bcm27xx-$rpi.Linux-x86_64.tar.xz"
+    wget -c $link/$wersja/targets/bcm27xx/$rpi/openwrt-imagebuilder-$wersja-bcm27xx-$rpi.Linux-x86_64.tar.xz
+    tar xvfJ openwrt-imagebuilder-$wersja-bcm27xx-$rpi.Linux-x86_64.tar.xz
 fi
 
 echo "Generuję obrazy ..."
 for ap in ap1; do
     # RPi 1 B + ath9k WiFi USB card
-    cd $HOME/wrt-$wersja/openwrt-imagebuilder-$wersja-brcm2708-$rpi.Linux-x86_64
+    cd $HOME/wrt-$wersja/openwrt-imagebuilder-$wersja-bcm27xx-$rpi.Linux-x86_64
     make image PACKAGES="luci luci-app-firewall luci-base luci-lib-ip luci-lib-jsonc \
     luci-lib-nixio luci-mod-admin-full luci-proto-ipv6 luci-proto-ppp luci-theme-bootstrap \
     mc curl nano kmod-ath9k-htc" FILES=../../wrt-config/$ap/
@@ -76,7 +77,7 @@ for ap in ap1; do
 done
 for ap in ap2 ap3; do
     # RPi Zero W + rtl8152 USB Ethernet
-    cd $HOME/wrt-$wersja/openwrt-imagebuilder-$wersja-brcm2708-$rpi.Linux-x86_64
+    cd $HOME/wrt-$wersja/openwrt-imagebuilder-$wersja-bcm27xx-$rpi.Linux-x86_64
     make image PACKAGES="luci luci-app-firewall luci-base luci-lib-ip luci-lib-jsonc \
     luci-lib-nixio luci-mod-admin-full luci-proto-ipv6 luci-proto-ppp luci-theme-bootstrap \
     mc curl nano kmod-usb-net-rtl8152" FILES=../../wrt-config/$ap/
