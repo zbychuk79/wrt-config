@@ -58,7 +58,7 @@ if [ ! -d $HOME/wrt-$wersja/openwrt-imagebuilder-$wersja-brcm2708-$rpi.Linux-x86
     echo "Pobieram ..."
     mkdir -p $HOME/wrt-$wersja
     cd $HOME/wrt-$wersja
-    wget -c $link/$wersja/targets/brcm2708/$rpi/openwrt-imagebuilder-$wersja-brcm2708-$rpi.Linux-x86_64.tar.xz
+    wget -c $link/$wersja/targets/bcm27xx/bcm2708/$rpi/openwrt-imagebuilder-$wersja-brcm2708-$rpi.Linux-x86_64.tar.xz
     tar xvfJ openwrt-imagebuilder-$wersja-brcm2708-$rpi.Linux-x86_64.tar.xz
 fi
 
