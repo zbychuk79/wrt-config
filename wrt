@@ -71,7 +71,7 @@ for ap in ap1; do
     luci-lib-nixio luci-mod-admin-full luci-proto-ipv6 luci-proto-ppp luci-theme-bootstrap \
     mc curl nano kmod-ath9k-htc" FILES=../../wrt-config/$ap/
     mkdir -p $HOME/openwrt-$wersja-images/$ap
-    mv bin/targets/brcm2708/$rpi/* $HOME/openwrt-$wersja-images/$ap
+    mv bin/targets/bcm27xx/$rpi/* $HOME/openwrt-$wersja-images/$ap
     cd
     tar cvfJ $HOME/openwrt-$wersja-images/$ap/$ap-config.tar.xz wrt-config/$ap
 done
@@ -82,7 +82,7 @@ for ap in ap2 ap3; do
     luci-lib-nixio luci-mod-admin-full luci-proto-ipv6 luci-proto-ppp luci-theme-bootstrap \
     mc curl nano kmod-usb-net-rtl8152" FILES=../../wrt-config/$ap/
     mkdir -p $HOME/openwrt-$wersja-images/$ap
-    mv bin/targets/brcm2708/$rpi/* $HOME/openwrt-$wersja-images/$ap
+    mv bin/targets/bcm27xx/$rpi/* $HOME/openwrt-$wersja-images/$ap
     cd
     tar cvfJ $HOME/openwrt-$wersja-images/$ap/$ap-config.tar.xz wrt-config/$ap
 done
