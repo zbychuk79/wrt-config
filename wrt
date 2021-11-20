@@ -3,8 +3,7 @@
 # Wersja RPi dla generowanego obrazu.
 #
 rpi="bcm2708"
-#wersja="18.06.9"
-wersja="21.02.0"
+wersja="21.02.1"
 link="https://downloads.openwrt.org/releases"
 
 usage()
