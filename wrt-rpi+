@@ -68,7 +68,7 @@ for ap in router_rpi3plus; do
     cd $HOME/wrt-$wersja/openwrt-imagebuilder-$wersja-bcm27xx-$rpi.Linux-x86_64
     make image PACKAGES="luci luci-app-firewall luci-base luci-lib-ip luci-lib-jsonc \
     luci-lib-nixio luci-mod-admin-full luci-proto-ipv6 luci-proto-ppp luci-theme-bootstrap \
-    mc curl nano kmod-usb-net-rtl8152" #FILES=../../wrt-config/$ap/
+    mc curl nano kmod-usb-net-rtl8152 netdata" #FILES=../../wrt-config/$ap/
     mkdir -p $HOME/openwrt-$wersja-images/$ap
     mv bin/targets/bcm27xx/$rpi/* $HOME/openwrt-$wersja-images/$ap
     cd
