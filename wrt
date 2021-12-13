@@ -7,9 +7,6 @@ wersja="21.02.1"
 link="https://downloads.openwrt.org/releases"
 
 czas=`date +%Y.%m.%d-%H.%M.%S`
-#echo $czas
-
-exit
 
 usage()
 {
