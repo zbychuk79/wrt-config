@@ -47,9 +47,9 @@ if [ "$clean" = "yes" ]; then
 fi
 
 #if [ ! -d wrt-config ]; then
-#    echo
-#    echo "Nie ma na dysku konfiguracji dla OpenWRT ( katalog wrt-config )."
-#    echo
+#    echo "
+# Nie ma na dysku konfiguracji dla OpenWRT ( katalog wrt-config ).
+#"
 #    git clone https://github.com/zbychuk79/wrt-config.git
 #fi
 
@@ -71,7 +71,7 @@ for ap in router_rpi3plus; do
     mc curl nano kmod-usb-net-rtl8152 netdata" #FILES=../../wrt-config/$ap/
     mkdir -p $HOME/openwrt-$wersja-images/$ap
     mv bin/targets/bcm27xx/$rpi/* $HOME/openwrt-$wersja-images/$ap
-    cd
-    #tar cvfJ $HOME/openwrt-$wersja-images/$ap/$ap-config.tar.xz wrt-config/$ap
 done
+
+cd
 cp $0 $HOME/openwrt-$wersja-images/
