@@ -6,6 +6,8 @@ rpi="bcm2710"
 wersja="21.02.1"
 link="https://downloads.openwrt.org/releases"
 
+czas=`date +%Y.%m.%d-%H.%M.%S`
+
 usage()
 {
     echo "
@@ -62,9 +64,9 @@ for ap in router_rpi3plus; do
     make image PACKAGES="luci luci-app-firewall luci-base luci-lib-ip luci-lib-jsonc \
     luci-lib-nixio luci-mod-admin-full luci-proto-ipv6 luci-proto-ppp luci-theme-bootstrap \
     mc curl nano kmod-usb-net-rtl8152 netdata" #FILES=../../wrt-config/$ap/
-    mkdir -p $HOME/openwrt-$wersja-images/$ap
-    mv bin/targets/bcm27xx/$rpi/* $HOME/openwrt-$wersja-images/$ap
+    mkdir -p $HOME/openwrt-$wersja-images-$czas/$ap
+    mv bin/targets/bcm27xx/$rpi/* $HOME/openwrt-$wersja-images-$czas/$ap
 done
 
 cd
-cp $0 $HOME/openwrt-$wersja-images/
+cp $0 $HOME/openwrt-$wersja-images-$czas/
