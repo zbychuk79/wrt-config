@@ -3,7 +3,7 @@
 # Wersja RPi dla generowanego obrazu.
 # (Rpi 3 B+)
 rpi="bcm2710"
-wersja="21.02.2"
+wersja="21.02.3"
 link="https://downloads.openwrt.org/releases"
 
 czas=`date +%Y.%m.%d-%H.%M.%S`
