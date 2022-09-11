@@ -1,0 +1,121 @@
+#!/bin/bash
+
+# Wersja RPi dla generowanego obrazu.
+#
+ap_rpi="bcm2708"
+rt_rpi="bcm2710"
+wersja="22.03.0"
+link="https://downloads.openwrt.org/releases"
+
+czas=`date +%Y.%m.%d-%H.%M.%S`
+
+usage()
+{
+    echo "
+Jak używać: wrt [ -w wersja ] [ -c ] | [ -h ]
+ -w wersja OpenWRT do budowy (domyślne: $wersja)
+ -c czyści swoje pliki z systemu
+ -h wyświetlenie tej instrukcji
+"
+}
+
+if [ "$#" = 0 ]; then
+    usage
+    echo
+fi
+
+while [ "$1" != "" ]; do
+    case $1 in
+        -w | --wersja )         shift
+                                wersja=$1
+                                ;;
+        -c | --clean )          clean="yes"
+                                ;;
+        -h | --help )           usage
+                                exit
+                                ;;
+        * )                     usage
+                                exit 1
+    esac
+    shift
+done
+
+cd
+if [ "$clean" = "yes" ]; then
+    echo "Czyszczę ..."
+    rm -rf $HOME/wrt-config
+    rm -rf $HOME/wrt-$wersja
+    rm -rf $HOME/openwrt-$wersja-images-*
+    exit 0
+fi
+
+if [ ! -d wrt-config ]; then
+    echo "
+Nie ma na dysku konfiguracji dla OpenWRT ( katalog wrt-config ).
+"
+    git clone https://github.com/zbychuk79/wrt-config.git
+fi
+
+# Ściąganie Image-Builder dla moich AP
+if [ ! -d $HOME/wrt-$wersja/openwrt-imagebuilder-$wersja-bcm27xx-$ap_rpi.Linux-x86_64 ]; then
+    echo "Pobieram ..."
+    mkdir -p $HOME/wrt-$wersja
+    cd $HOME/wrt-$wersja
+    echo "$link/$wersja/targets/bcm27xx/$ap_rpi/openwrt-imagebuilder-$wersja-bcm27xx-$ap_rpi.Linux-x86_64.tar.xz"
+    wget -c $link/$wersja/targets/bcm27xx/$ap_rpi/openwrt-imagebuilder-$wersja-bcm27xx-$ap_rpi.Linux-x86_64.tar.xz
+    tar xvfJ openwrt-imagebuilder-$wersja-bcm27xx-$ap_rpi.Linux-x86_64.tar.xz
+fi
+
+# Generowanie obrazów dla moich AP
+echo "Generuję obrazy ..."
+for ap in ap1; do
+    # RPi 1 B + ath9k WiFi USB card
+    cd $HOME/wrt-$wersja/openwrt-imagebuilder-$wersja-bcm27xx-$ap_rpi.Linux-x86_64
+    make image PACKAGES="base-files bcm27xx-gpu-fw busybox ca-bundle cypress-firmware-43430-sdio cypress-nvram-43430-sdio-rpi-zero-w dnsmasq dropbear e2fsprogs firewall4 fstools \
+    iwinfo kmod-brcmfmac kmod-fs-vfat kmod-nft-offload kmod-nls-cp437 kmod-nls-iso8859-1 kmod-sound-arm-bcm2835 kmod-sound-core kmod-usb-hid libc libgcc \
+    libustream-wolfssl logd mkf2fs mtd netifd nftables odhcp6c odhcpd-ipv6only opkg partx-utils ppp ppp-mod-pppoe procd procd-seccomp procd-ujail uci \
+    uclient-fetch urandom-seed wpad-basic-wolfssl \
+    luci luci-app-firewall luci-base luci-lib-ip luci-lib-jsonc \
+    luci-lib-nixio luci-mod-admin-full luci-proto-ipv6 luci-proto-ppp luci-theme-bootstrap \
+    mc curl nano kmod-ath9k-htc" FILES=../../wrt-config/$ap/
+    mkdir -p $HOME/openwrt-$wersja-images-$czas/$ap
+    mv bin/targets/bcm27xx/$ap_rpi/* $HOME/openwrt-$wersja-images-$czas/$ap
+    cd
+    #tar cvfJ $HOME/openwrt-$wersja-images-$czas/$ap/$ap-config.tar.xz wrt-config/$ap
+done
+#for ap in ap2 ap3; do
+#    # RPi Zero W + rtl8152 USB Ethernet
+#    cd $HOME/wrt-$wersja/openwrt-imagebuilder-$wersja-bcm27xx-$ap_rpi.Linux-x86_64
+#    make image PACKAGES="luci luci-app-firewall luci-base luci-lib-ip luci-lib-jsonc \
+#    luci-lib-nixio luci-mod-admin-full luci-proto-ipv6 luci-proto-ppp luci-theme-bootstrap \
+#    mc curl nano kmod-usb-net-rtl8152" FILES=../../wrt-config/$ap/
+#    mkdir -p $HOME/openwrt-$wersja-images-$czas/$ap
+#    mv bin/targets/bcm27xx/$ap_rpi/* $HOME/openwrt-$wersja-images-$czas/$ap
+#    cd
+#    #tar cvfJ $HOME/openwrt-$wersja-images-$czas/$ap/$ap-config.tar.xz wrt-config/$ap
+#done
+
+# Ściąganie Image-Builder dla moich routera na RPi3+
+#if [ ! -d $HOME/wrt-$wersja/openwrt-imagebuilder-$wersja-bcm27xx-$rt_rpi.Linux-x86_64 ]; then
+#    echo "Pobieram ..."
+#    mkdir -p $HOME/wrt-$wersja
+#    cd $HOME/wrt-$wersja
+#    echo "$link/$wersja/targets/bcm27xx/$rt_rpi/openwrt-imagebuilder-$wersja-bcm27xx-$rt_rpi.Linux-x86_64.tar.xz"
+#    wget -c $link/$wersja/targets/bcm27xx/$rt_rpi/openwrt-imagebuilder-$wersja-bcm27xx-$rt_rpi.Linux-x86_64.tar.xz
+#    tar xvfJ openwrt-imagebuilder-$wersja-bcm27xx-$rt_rpi.Linux-x86_64.tar.xz
+#fi
+
+# Generowanie obrazów dla mojego routera na RPi3+
+#echo "Generuję obrazy ..."
+#for ap in router_rpi3plus; do
+#    # RPi 3B+ i rtl8152 USB Ethernet jako WAN
+#    cd $HOME/wrt-$wersja/openwrt-imagebuilder-$wersja-bcm27xx-$rt_rpi.Linux-x86_64
+#    make image PACKAGES="luci luci-app-firewall luci-base luci-lib-ip luci-lib-jsonc \
+#    luci-lib-nixio luci-mod-admin-full luci-proto-ipv6 luci-proto-ppp luci-theme-bootstrap \
+#    mc curl nano kmod-usb-net-rtl8152 netdata" #FILES=../../wrt-config/$ap/
+#    mkdir -p $HOME/openwrt-$wersja-images-$czas/$ap
+#    mv bin/targets/bcm27xx/$rt_rpi/* $HOME/openwrt-$wersja-images-$czas/$ap
+#done
+
+cd
+cp $0 $HOME/openwrt-$wersja-images-$czas/
