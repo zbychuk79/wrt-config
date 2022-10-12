@@ -4,7 +4,7 @@
 #
 ap_rpi="bcm2708"
 rt_rpi="bcm2710"
-wersja="22.03.0"
+wersja="22.03.1"
 link="https://downloads.openwrt.org/releases"
 
 czas=`date +%Y.%m.%d-%H.%M.%S`
