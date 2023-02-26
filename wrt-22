@@ -101,7 +101,7 @@ for ap in ap2 ap3; do
     #tar cvfJ $HOME/openwrt-$wersja-images-$czas/$ap/$ap-config.tar.xz $tmp/wrt-config/$ap
 done
 
-# Ściąganie Image-Builder dla moich routera na RPi3+
+# Ściąganie Image-Builder dla mojego routera na RPi3+
 if [ ! -d $HOME/$tmp/wrt-$wersja/openwrt-imagebuilder-$wersja-bcm27xx-$rt_rpi.Linux-x86_64 ]; then
     echo "Pobieram ..."
     mkdir -p $HOME/$tmp/wrt-$wersja
