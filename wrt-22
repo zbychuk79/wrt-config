@@ -4,7 +4,7 @@
 #
 ap_rpi="bcm2708"
 rt_rpi="bcm2710"
-wersja="22.03.3"
+wersja="22.03.4"
 link="https://downloads.openwrt.org/releases"
 tmp="tmp"
 
