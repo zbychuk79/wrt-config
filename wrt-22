@@ -4,7 +4,7 @@
 #
 ap_rpi="bcm2708"
 rt_rpi="bcm2710"
-wersja="22.03.5"
+wersja="22.03.6"
 link="https://downloads.openwrt.org/releases"
 tmp="tmp"
 
@@ -101,7 +101,7 @@ for ap in ap2 ap3; do
     #tar cvfJ $HOME/openwrt-$wersja-images-$czas/$ap/$ap-config.tar.xz $tmp/wrt-config/$ap
 done
 
-# Ściąganie Image-Builder dla mojego routera na RPi3+
+## Ściąganie Image-Builder dla mojego routera na RPi3+
 if [ ! -d $HOME/$tmp/wrt-$wersja/openwrt-imagebuilder-$wersja-bcm27xx-$rt_rpi.Linux-x86_64 ]; then
     echo "Pobieram ..."
     mkdir -p $HOME/$tmp/wrt-$wersja
@@ -122,7 +122,7 @@ for ap in router_rpi3plus; do
     nftables odhcp6c odhcpd-ipv6only opkg partx-utils ppp ppp-mod-pppoe procd procd-seccomp procd-ujail uci uclient-fetch urandom-seed wpad-basic-wolfssl \
     luci luci-app-firewall luci-base luci-lib-ip luci-lib-jsonc \
     luci-lib-nixio luci-mod-admin-full luci-proto-ipv6 luci-proto-ppp luci-theme-bootstrap \
-    mc curl nano kmod-usb-net-rtl8152 netdata" #FILES=../../wrt-config/$ap/
+    mc curl nano kmod-usb-net-rtl8152" #FILES=../../wrt-config/$ap/
     mkdir -p $HOME/$tmp/openwrt-$wersja-images-$czas/$ap
     mv bin/targets/bcm27xx/$rt_rpi/* $HOME/$tmp/openwrt-$wersja-images-$czas/$ap
 done
