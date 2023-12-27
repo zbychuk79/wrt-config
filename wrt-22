@@ -129,3 +129,17 @@ done
 
 cd
 cp $0 $HOME/$tmp/openwrt-$wersja-images-$czas/
+
+# Podpisywanie sum kontrolnych kluczem OpenPGP
+echo "
+Podpisywanie sum kontrolnych kluczem OpenPGP ...
+"
+for i in $HOME/$tmp/openwrt-$wersja-images-$czas/ap*/sha256sums
+do
+    gpg -b $i
+done
+for i in $HOME/$tmp/openwrt-$wersja-images-$czas/router*/sha256sums
+do
+    gpg -b $i
+done
+gpg -b $HOME/$tmp/openwrt-$wersja-images-$czas/wrt-22
